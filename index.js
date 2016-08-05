@@ -1,1 +1,1 @@
-module.exports = require('./dist/cli');
+module.exports.default = require('./dist/cleanup');
