@@ -3,7 +3,7 @@ cleanup-package-json
 
 ## Get started
 ```sh
-$ npm install cleanup-package-json -g
+$ npm install cpj -g
 ```
 
 ## Features
@@ -11,7 +11,7 @@ $ npm install cleanup-package-json -g
 
 ## Usage
 ```sh
-$ cleanup-package-json -h
+$ cpj -h
 ```
 
 ### Examples
@@ -20,12 +20,12 @@ _Default config:_
 Default config name is `cpj.config.json`.
 
 ```sh
-$ cleanup-package-json
+$ cpj
 ```
 
 _With custom file config:_
 ```sh
-$ cleanup-package-json -c custom-config.json
+$ cpj -c custom-config.json
 ```
 
 ## Config example
