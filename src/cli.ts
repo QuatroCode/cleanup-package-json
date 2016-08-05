@@ -16,16 +16,27 @@ let opt = optimist
         alias: 'config',
         describe: 'Path to config.'
     })
+    .options('v', {
+        alias: 'version',
+        describe: 'Prints version.'
+    })
     .usage('Usage: cleanup-package-json [options]')
     .boolean(['h', 'v'])
     .string(['c']);
 
 class Cli {
+    private package: Contracts.PackageJSONSkeleton = {};
+
     constructor(opt: optimist.Parser) {
+        let packageJSONPath = path.join(__dirname, '../package.json');
+        this.package = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'));
         let argv = opt.argv as Contracts.Arguments;
 
         if (argv.help) {
+            this.printVersion();
             console.info(opt.help());
+        } else if (argv.version) {
+            this.printVersion();
         } else {
             let configFileName = argv.config || DEFAULT_CONFIG_NAME;
             this.main(configFileName);
@@ -45,7 +56,7 @@ class Cli {
                 let cleanup = new Cleanup(config);
                 cleanup.Clean();
                 console.info('[Success] Done cleaning up');
-            } catch(e) {
+            } catch (e) {
                 this.throwError(`[Failed] ${e}`);
             }
         } else {
@@ -88,6 +99,10 @@ class Cli {
                 }
             });
         });
+    }
+
+    private printVersion() {
+        console.info(`Version ${this.package['version']} \n`);
     }
 }
 

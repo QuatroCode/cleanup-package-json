@@ -2,6 +2,7 @@ export interface Arguments {
     [arg: string]: string | boolean;
     config: string;
     help: boolean;
+    version: boolean;
 }
 
 export interface ConfigItems {
