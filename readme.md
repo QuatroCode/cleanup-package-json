@@ -11,7 +11,7 @@ $ npm install cleanup-package-json -g
 
 ## Usage
 ```sh
-$ scss-bundle -h
+$ cleanup-package-json -h
 ```
 
 ### Examples
@@ -23,7 +23,7 @@ Default config name is `cpj.config.json`.
 $ cleanup-package-json
 ```
 
-_With custom name config:_
+_With custom file config:_
 ```sh
 $ cleanup-package-json -c custom-config.json
 ```
