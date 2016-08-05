@@ -1,6 +1,6 @@
 {
     "name": "cleanup-package-json",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "Cleans package.json file.",
     "main": "index.js",
     "scripts": {
