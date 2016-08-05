@@ -1,6 +1,6 @@
 {
     "name": "cleanup-package-json",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Cleans package.json file.",
     "main": "index.js",
     "scripts": {
@@ -19,6 +19,6 @@
         "optimist": "^0.6.1"
     },
     "bin": {
-        "cleanup-package-json": "./dist/cli.js"
+        "cpj": "./dist/cli.js"
     }
 }
