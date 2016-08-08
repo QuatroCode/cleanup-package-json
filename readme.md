@@ -11,7 +11,7 @@ $ npm install cpj -g
 
 ## Usage
 ```sh
-$ cpj -h
+$ cpj --help
 ```
 
 ### Examples
@@ -46,7 +46,7 @@ $ cpj -c custom-config.json
 |--------------|--------------------------------|---------|-----------------------------------------------------------|
 | include      | [arg: string]: Array\<string\> | none    | Parts that must be included.                              |
 | exclude      | [arg: string]: Array\<string\> | none    | Parts that will be removed (Lower priority then include). |
-| backup       | boolean                        | false   | Backups `package.json` to `package.bak.json`.             |
+| backup       | boolean                        | true    | Backups `package.json` to `package.bak.json`.             |
 | writeChanges | boolean                        | true    | Writes changes to `package.json`.                         |
 
 ## License

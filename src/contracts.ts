@@ -1,8 +1,9 @@
 export interface Arguments {
     [arg: string]: string | boolean;
+    version: boolean;
     config: string;
     help: boolean;
-    version: boolean;
+    backup: boolean;
 }
 
 export interface ConfigItems {
@@ -12,7 +13,7 @@ export interface ConfigItems {
 export interface Config {
     include?: ConfigItems;
     exclude?: ConfigItems;
-    backup?: string;
+    backup?: boolean;
     writeChanges?: boolean;
 }
 

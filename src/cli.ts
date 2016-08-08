@@ -1,49 +1,19 @@
 #!/usr/bin/env node
-import * as optimist from 'optimist';
 import * as Contracts from './contracts';
 import * as fs from 'fs';
 import * as path from 'path';
 import Cleanup from './cleanup';
+import Arguments from './arguments';
 
 const DEFAULT_CONFIG_NAME = 'cpj.config.json';
 
-let opt = optimist
-    .options('h', {
-        alias: 'help',
-        describe: 'Prints this message.'
-    })
-    .options('c', {
-        alias: 'config',
-        describe: 'Path to config.'
-    })
-    .options('v', {
-        alias: 'version',
-        describe: 'Prints version.'
-    })
-    .usage('Usage: cleanup-package-json [options]')
-    .boolean(['h', 'v'])
-    .string(['c']);
-
 class Cli {
-    private package: Contracts.PackageJSONSkeleton = {};
-
-    constructor(opt: optimist.Parser) {
-        let packageJSONPath = path.join(__dirname, '../package.json');
-        this.package = JSON.parse(fs.readFileSync(packageJSONPath, 'utf8'));
-        let argv = opt.argv as Contracts.Arguments;
-
-        if (argv.help) {
-            this.printVersion();
-            console.info(opt.help());
-        } else if (argv.version) {
-            this.printVersion();
-        } else {
-            let configFileName = argv.config || DEFAULT_CONFIG_NAME;
-            this.main(configFileName);
-        }
+    constructor(args: Contracts.Arguments) {
+        let configName = args.config || DEFAULT_CONFIG_NAME;
+        this.main(configName, args);
     }
 
-    private async main(configFileName: string) {
+    private async main(configFileName: string, args: Contracts.Arguments) {
         let fullPath = path.join(process.cwd(), configFileName);
         let configExists = await this.checkConfigIsExist(fullPath);
 
@@ -53,7 +23,7 @@ class Cli {
             }) as Contracts.ConfigItems;
 
             try {
-                let cleanup = new Cleanup(config);
+                let cleanup = new Cleanup(this.getConfig(config, args));
                 cleanup.Clean();
                 console.info('[Success] Done cleaning up');
             } catch (e) {
@@ -63,6 +33,11 @@ class Cli {
             this.throwError(`[Error] Config file ${DEFAULT_CONFIG_NAME} was not found.`);
         }
 
+    }
+
+    private getConfig(config: Contracts.Config, args: Contracts.Arguments) {
+        if (args.backup != null) config.backup = args.backup;
+        return config;
     }
 
     private throwError(text: string) {
@@ -100,10 +75,6 @@ class Cli {
             });
         });
     }
-
-    private printVersion() {
-        console.info(`Version ${this.package['version']} \n`);
-    }
 }
 
-new Cli(opt);
+new Cli(Arguments);

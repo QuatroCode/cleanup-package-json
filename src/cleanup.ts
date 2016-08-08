@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as Contracts from './contracts';
 import * as Helpers from './helpers';
 
@@ -19,8 +20,8 @@ export default class Cleanup {
             modifiedPackageJSON = this.include(packageJSON, modifiedPackageJSON, excluded);
         }
 
-        if (this.config.backup != null && this.config.backup) {
-            this.writePackageJSON(packageJSON, 'package.bak.json');
+        if (this.config.backup != null && this.config.backup || this.config.backup == null) {
+            this.writePackageJSON(packageJSON, this.getBackupName());
         }
 
         if (this.config.writeChanges != null && this.config.writeChanges || this.config.writeChanges == null) {
@@ -110,5 +111,24 @@ export default class Cleanup {
     private writePackageJSON(packageJSON: Contracts.PackageJSONSkeleton, file: string) {
         let data = JSON.stringify(packageJSON, null, 4);
         fs.writeFileSync(file, data);
+    }
+
+    private getBackupName() {
+        let n = 1;
+        let exists = true;
+        let fullPath = ''
+        while (exists) {
+            fullPath = path.join(process.cwd(), this.defaultBackupName(n));
+            exists = fs.existsSync(fullPath);
+            if (!exists) {
+                return this.defaultBackupName(n);
+            }
+            n++;
+        }
+        return fullPath;
+    }
+
+    private defaultBackupName(n: Number) {
+        return `package.backup${(n > 1) ? n : ''}.json`;
     }
 }
