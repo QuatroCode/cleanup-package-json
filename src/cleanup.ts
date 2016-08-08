@@ -20,7 +20,7 @@ export default class Cleanup {
             modifiedPackageJSON = this.include(packageJSON, modifiedPackageJSON, excluded);
         }
 
-        if (this.config.backup != null && this.config.backup) {
+        if (this.config.backup != null && this.config.backup || this.config.backup == null) {
             this.writePackageJSON(packageJSON, this.getBackupName());
         }
 
