@@ -7,6 +7,10 @@
     "build": "tsc -p .",
     "prepublish": "npm run build"
   },
+  "keywords": [
+    "cleanup",
+    "package"
+  ],
   "author": "Martynas Zilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
   "bugs": "https://github.com/QuatroCode/cleanup-package-json/issues",
   "repository": "QuatroCode/cleanup-package-json",
