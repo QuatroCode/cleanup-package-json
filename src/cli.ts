@@ -10,10 +10,10 @@ const DEFAULT_CONFIG_NAME = 'cpj.config.json';
 class Cli {
     constructor(args: Contracts.Arguments) {
         let configName = args.config || DEFAULT_CONFIG_NAME;
-        this.main(configName);
+        this.main(configName, args);
     }
 
-    private async main(configFileName: string) {
+    private async main(configFileName: string, args: Contracts.Arguments) {
         let fullPath = path.join(process.cwd(), configFileName);
         let configExists = await this.checkConfigIsExist(fullPath);
 
@@ -23,7 +23,7 @@ class Cli {
             }) as Contracts.ConfigItems;
 
             try {
-                let cleanup = new Cleanup(config);
+                let cleanup = new Cleanup(this.getConfig(config, args));
                 cleanup.Clean();
                 console.info('[Success] Done cleaning up');
             } catch (e) {
@@ -33,6 +33,11 @@ class Cli {
             this.throwError(`[Error] Config file ${DEFAULT_CONFIG_NAME} was not found.`);
         }
 
+    }
+
+    private getConfig(config: Contracts.Config, args: Contracts.Arguments) {
+        if (args.backup != null) config.backup = args.backup;
+        return config;
     }
 
     private throwError(text: string) {

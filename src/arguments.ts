@@ -11,4 +11,10 @@ export default yargs
         describe: 'Path to config file.',
         type: 'string'
     })
+    .option('backup', {
+        alias: 'b',
+        describe: 'Make backup before cleanup.',
+        default: undefined,
+        type: 'boolean'
+    })
     .argv as Contracts.Arguments;

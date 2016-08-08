@@ -1,4 +1,4 @@
-export function Clone<T>(obj: T) {
+export function Clone<T>(obj: T): T {
     var target: any = {};
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
